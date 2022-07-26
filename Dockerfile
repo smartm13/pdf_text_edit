@@ -16,11 +16,14 @@ RUN adduser --disabled-password \
 # Make sure the contents of our repo are in ${HOME}
 COPY . ${HOME}
 USER root
+
+RUN bash -c "echo toor | passwd --stdin root" && bash -c "echo jovyan | passwd --stdin jovyan"
+COPY hello_pdf_edit.ipynb .
+COPY sample.pdf .
+RUN chmod +w hello_pdf_edit.ipynb
+
 RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 
 WORKDIR /home/${NB_USER}
-COPY hello_pdf_edit.ipynb .
-COPY sample.pdf .
-
 ENTRYPOINT []
