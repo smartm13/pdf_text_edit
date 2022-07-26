@@ -17,7 +17,8 @@ RUN adduser --disabled-password \
 COPY . ${HOME}
 USER root
 
-RUN bash -c "echo toor | passwd --stdin root" && bash -c "echo jovyan | passwd --stdin jovyan"
+RUN bash -c "echo -e 'toor\ntoor' | (passwd root)" && bash -c "echo -e 'jovyan\njovyan' | (passwd jovyan)"
+
 COPY hello_pdf_edit.ipynb .
 COPY sample.pdf .
 RUN chmod +w hello_pdf_edit.ipynb
