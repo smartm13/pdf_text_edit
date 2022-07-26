@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM python:3.8.10-buster
 WORKDIR /content
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata 
 RUN apt-get -y update && apt-get -y upgrade && \
@@ -17,8 +17,6 @@ tar -xzvf swig-4.0.1.tar.gz && \
 cd swig-4.0.1 && \
 ./configure  && \
 make && make install #installs swig
-RUN cd /content/PDFNetWrappers && \
-echo -ne '6\n44\n' | apt-get install -y python3-dev python3-pip python3-tk python3-lxml python3-six
 
 #RUN cmake -D BUILD_PDFNetPython=ON .
 #RUN make && make install
@@ -33,7 +31,6 @@ RUN ( cat /tmp/PDFNW.zi.* > /tmp/PDFNW.zip ) && rm /tmp/PDFNW.zi.* && \
 
 RUN echo PYTHONPATH="/content/PDFNetWrappers/PDFNetC/Lib" > /content/PDFNetWrappers/.env
 # test
-RUN python -c "__import__('site').addsitedir('/content/PDFNetWrappers/PDFNetC/Lib'); from PDFNetPython import PDFNet,PDFDoc,ElementWriter,ElementReader,SDFDoc,Element,ColorSpace,ColorPt"
+RUN python3.8 -c "__import__('site').addsitedir('/content/PDFNetWrappers/PDFNetC/Lib'); from PDFNetPython import PDFNet,PDFDoc,ElementWriter,ElementReader,SDFDoc,Element,ColorSpace,ColorPt"
 
 ENTRYPOINT bash
-

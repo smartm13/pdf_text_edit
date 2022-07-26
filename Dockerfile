@@ -1,7 +1,7 @@
 FROM sanjufree/pdf_edit:v1
 
 # for Binder
-RUN python3 -m pip install --no-cache-dir notebook==5.7.4 jupyterlab==0.35.5
+RUN python3.8 -m pip install --no-cache-dir notebook jupyterlab
 ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER ${NB_USER}
@@ -14,11 +14,9 @@ RUN adduser --disabled-password \
     ${NB_USER}
 
 # Make sure the contents of our repo are in ${HOME}
-COPY . ${HOME}
+
 USER root
-
 RUN bash -c "echo -e 'toor\ntoor' | (passwd root)" && bash -c "echo -e 'jovyan\njovyan' | (passwd jovyan)"
-
 COPY hello_pdf_edit.ipynb .
 COPY sample.pdf .
 RUN chmod +w hello_pdf_edit.ipynb
