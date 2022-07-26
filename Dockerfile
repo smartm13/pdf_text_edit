@@ -1,4 +1,4 @@
-FROM sanjufree/pdf_edit:v1
+FROM sanjufree/pdf_edit:v2
 
 # for Binder
 RUN python3.8 -m pip install --no-cache-dir notebook jupyterlab
